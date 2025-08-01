@@ -4,4 +4,4 @@
 * Deve ser compilado na IDE Lazarus.
 
 # Componentes de terceiros utilizados
-* cryptINI -> https://wiki.lazarus.freepascal.org/CryptINI
+* <a href="https://wiki.lazarus.freepascal.org/CryptINI">CryptINI</a>
