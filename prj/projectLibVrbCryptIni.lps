@@ -3,13 +3,13 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Linux64 Release"/>
+    <BuildModes Active="Win32 Release"/>
     <Units>
       <Unit>
         <Filename Value="projectLibVrbCryptIni.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="85" Y="15"/>
+        <CursorPos X="84" Y="14"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit>
