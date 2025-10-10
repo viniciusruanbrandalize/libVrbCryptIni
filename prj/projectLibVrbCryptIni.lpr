@@ -36,93 +36,189 @@ uses
 var
   INI: TCryptIniFile;
 
-  procedure inicializar(Arquivo, key, MD5: PChar); stdcall; Export;
+  function LerString(Arquivo, Chave, MD5, Secao, Identificador, Default: PChar): PChar; stdcall; Export;
   begin
-    INI           := TCryptIniFile.Create(Arquivo);
-    INI.KeyPhrase := key;
-    INI.MD5Hash   := MD5;
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := PChar(INI.ReadString(Secao, Identificador, Default));
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure finalizar(); stdcall; Export;
+  function LerString255(Arquivo, Chave, MD5, Secao, Identificador, Default: PChar): ShortString; stdcall; Export;
   begin
-    if Assigned(INI) then
-      INI.Free;
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.ReadString(Secao, Identificador, Default);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure LerString(Secao, Identificador: PChar; out Valor: String); stdcall; Export;
+  function LerInteger(Arquivo, Chave, MD5, Secao, Identificador: PChar; Default: Integer): Integer; stdcall; Export;
   begin
-    Valor := INI.ReadString(Secao, Identificador, '');
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.ReadInteger(Secao, Identificador, Default);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure LerInteger(Secao, Identificador: PChar; out Valor: Integer); stdcall; Export;
+  function LerData(Arquivo, Chave, MD5, Secao, Identificador: PChar; Default: TDate): TDate; stdcall; Export;
   begin
-    Valor := INI.ReadInteger(Secao, Identificador, 0);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.ReadDate(Secao, Identificador, Default);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure LerData(Secao, Identificador: PChar; out Valor: TDate); stdcall; Export;
+  function LerHora(Arquivo, Chave, MD5, Secao, Identificador: PChar; Default: TTime): TTime; stdcall; Export;
   begin
-    Valor := INI.ReadDate(Secao, Identificador, Now);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.ReadTime(Secao, Identificador, Default);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure LerHora(Secao, Identificador: PChar; out Valor: TTime); stdcall; Export;
+  function LerDataHora(Arquivo, Chave, MD5, Secao, Identificador: PChar; Default: TDateTime): TDateTime; stdcall; Export;
   begin
-    Valor := INI.ReadTime(Secao, Identificador, Now);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.ReadDateTime(Secao, Identificador, Default);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure LerDataHora(Secao, Identificador: PChar; out Valor: TDateTime); stdcall; Export;
+  function LerBoolean(Arquivo, Chave, MD5, Secao, Identificador: PChar; Default: Boolean): Boolean; stdcall; Export;
   begin
-    Valor := INI.ReadDateTime(Secao, Identificador, Now);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.ReadBool(Secao, Identificador, Default);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure LerBoolean(Secao, Identificador: PChar; out Valor: Boolean); stdcall; Export;
+  procedure EscreverString(Arquivo, Chave, MD5, Secao, Identificador, Valor: PChar); stdcall; Export;
   begin
-    Valor := INI.ReadBool(Secao, Identificador, false);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      INI.WriteString(Secao, Identificador, Valor);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure EscreverString(Secao, Identificador, Valor: PChar); stdcall; Export;
+  procedure EscreverInteger(Arquivo, Chave, MD5, Secao, Identificador: PChar; Valor: Integer); stdcall; Export;
   begin
-    INI.WriteString(Secao, Identificador, Valor);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      INI.WriteInteger(Secao, Identificador, Valor);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure EscreverInteger(Secao, Identificador: PChar; Valor: Integer); stdcall; Export;
+  procedure EscreverData(Arquivo, Chave, MD5, Secao, Identificador: PChar; Valor: TDate); stdcall; Export;
   begin
-    INI.WriteInteger(Secao, Identificador, Valor);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      INI.WriteDate(Secao, Identificador, Valor);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure EscreverData(Secao, Identificador: PChar; Valor: TDate); stdcall; Export;
+  procedure EscreverHora(Arquivo, Chave, MD5, Secao, Identificador: PChar; Valor: TTime); stdcall; Export;
   begin
-    INI.WriteDate(Secao, Identificador, Valor);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      INI.WriteTime(Secao, Identificador, Valor);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure EscreverHora(Secao, Identificador: PChar; Valor: TTime); stdcall; Export;
+  procedure EscreverDataHora(Arquivo, Chave, MD5, Secao, Identificador: PChar; Valor: TDateTime); stdcall; Export;
   begin
-    INI.WriteTime(Secao, Identificador, Valor);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      INI.WriteDateTime(Secao, Identificador, Valor);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure EscreverDataHora(Secao, Identificador: PChar; Valor: TDateTime); stdcall; Export;
+  procedure EscreverBoolean(Arquivo, Chave, MD5, Secao, Identificador: PChar; Valor: Boolean); stdcall; Export;
   begin
-    INI.WriteDateTime(Secao, Identificador, Valor);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      INI.WriteBool(Secao, Identificador, Valor);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure EscreverBoolean(Secao, Identificador: PChar; Valor: Boolean); stdcall; Export;
+  function ExisteSecao(Arquivo, Chave, MD5, Secao: PChar): Boolean; stdcall; Export;
   begin
-    INI.WriteBool(Secao, Identificador, Valor);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.SectionExists(Secao);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
-  procedure ExisteSecao(Secao: PChar; out Existe: Boolean); stdcall; Export;
+  function ExisteValor(Arquivo, Chave, MD5, Secao, Identificador: PChar): Boolean; stdcall; Export;
   begin
-    Existe := INI.SectionExists(Secao);
-  end;
-
-  procedure ExisteValor(Secao, Identificador: PChar; out Existe: Boolean); stdcall; Export;
-  begin
-    Existe := INI.ValueExists(Secao, Identificador);
+    INI := TCryptIniFile.Create(Arquivo);
+    try
+      INI.KeyPhrase := Chave;
+      INI.MD5Hash   := MD5;
+      Result := INI.ValueExists(Secao, Identificador);
+    finally
+      FreeAndNil(INI);
+    end;
   end;
 
 exports
-  inicializar,
-  finalizar,
   LerString,
+  LerString255,
   LerInteger,
   LerData,
   LerHora,

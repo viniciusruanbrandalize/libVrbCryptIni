@@ -16,8 +16,8 @@
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <MinorVersionNr Value="1"/>
-      <StringTable FileDescription="libVrbCryptIni" LegalCopyright="Copyright (c) 2025 Vinícius Ruan Brandalize" OriginalFilename="libVrbCryptIni" ProductName="libVrbCryptIni" ProductVersion="0.1.0"/>
+      <MajorVersionNr Value="1"/>
+      <StringTable FileDescription="libVrbCryptIni" LegalCopyright="Copyright (c) 2025 Vinícius Ruan Brandalize" OriginalFilename="libVrbCryptIni" ProductName="libVrbCryptIni" ProductVersion="1.0.0"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Win32 Release" Default="True"/>
