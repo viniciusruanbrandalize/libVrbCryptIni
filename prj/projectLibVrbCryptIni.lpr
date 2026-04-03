@@ -27,10 +27,10 @@ library projectLibVrbCryptIni;
 {$mode objfpc}{$H+}
 
 uses
-  Classes,
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
+  Classes,
   ucryptini, Interfaces, SysUtils;
 
 var
